@@ -41,6 +41,16 @@ void decorado();
 void mensajeError();
 
 /**
+ * @brief Pausa simulada para hacer tiempo en la ejecucion
+ */
+void simularPausa();
+
+/**
+ * @brief Mensaje de salida para mostrar creditos
+ */
+void mensajeSistema();
+
+/**
  * @brief Seleccionar que tipo de dato quiero usar
  * @param mensaje que va a mostrar
  * @return El tipo de dato ingresado (float)

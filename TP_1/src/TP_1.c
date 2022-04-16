@@ -8,12 +8,14 @@
  ============================================================================
  */
 
+//Librerias
 #include <stdio.h>
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "./TP_1.h"
+#include "TP_1.h"
 
+//Constantes
 #define AEROLINEAS "Aerolineas"
 #define LATAM "Latam"
 #define BTC 4606954.55
@@ -21,8 +23,11 @@
 #define PRECIO_A 162965
 #define PRECIO_L 159339
 
+//Funciones utilizadas
 int menuPrincipal() {
 	int option;
+	printf("\n----------->MAIN MENU<-----------");
+	printf("\n");
 	printf("\n1. Ingresar Kilometros");
 	printf("\n2. Ingresar Precio de Vuelos");
 	printf("\n3. Calcular todos los costos");
@@ -37,11 +42,12 @@ int menuPrincipal() {
 	return option;
 }
 
-void informe(char empresa[], float precio, float debito, float credito, double bitcoin, float tramo) {
+void informe(char empresa[], float precio, float debito, float credito,
+		double bitcoin, float tramo) {
 	printf("\n%s: $%.2f", empresa, precio);
-	printf("\na) Precio con tarjeta de débito: $%.2f", debito);
-	printf("\nb) Precio con tarjeta de crédito: $%.2f", credito);
-	printf("\nc) Precio pagando con bitcoin: %lf BTC", bitcoin);
+	printf("\na) Precio con tarjeta de debito: $%.2f", debito);
+	printf("\nb) Precio con tarjeta de credito: $%.2f", credito);
+	printf("\nc) Precio pagando con bitcoins: %lf BTC", bitcoin);
 	printf("\nd) Precio unitario: $%.2f", tramo);
 }
 
@@ -54,7 +60,29 @@ void decorado() {
 }
 
 void mensajeError() {
-	printf("ERROR# ");
+	printf("\nERROR# Revisa lo que hiciste...");
+}
+
+void simularPausa() {
+	char tecla;
+	do {
+		printf("\n------------> Presiona 's' para continuar... ");
+		__fpurge(stdin);
+		scanf("%c", &tecla);
+	} while (tecla != 's');
+
+}
+
+void mensajeSistema() {
+	//Para LINUX OS
+	system("sleep 1");
+	system("echo  -----------------------------------");
+	system("sleep 1.5s");
+	system("echo  -  - Developed by Natt Forclaz -  -");
+	system("sleep 1.5s");
+	system("echo  -----------------------------------");
+	system("sleep 5s");
+	system("clear");
 }
 
 float ingresarDato(char mensaje[]) {
@@ -89,6 +117,7 @@ float calculoDiferencia(float precioAero, float precioLata) {
 int main(void) {
 	setbuf(stdout, NULL);
 
+//Declaracion de variables
 	int option;
 	float km;
 	float precioAerolineas;
@@ -111,69 +140,27 @@ int main(void) {
 		option = menuPrincipal();
 
 		switch (option) {
-			case 1:
-				km = ingresarDato("\nIngrese cantidad de KM: ");
-				printf("\nKilometros ingresados %.2f", km);
-				flagCase1 = 1;
-				break;
-			case 2:
-				if (flagCase1) {
-					precioAerolineas = ingresarDato("\nIngrese el precio para Aerolineas: $");
-					precioLatam = ingresarDato("\nIngrese el precio para Latam: $");
-					printf("\nValor de %s %.2f", AEROLINEAS, precioAerolineas);
-					printf("\nValor de %s %.2f", LATAM, precioLatam);
-					flagCase2 = 1;
-				} else {
-					mensajeError();
-				}
-				break;
-			case 3:
-				if (flagCase2) {
-					printf("\nCalculando precios...");
-
-					//Debito
-					debitoAerolineas = calculoPrecio(precioAerolineas, 0.9);
-					debitoLatam = calculoPrecio(precioLatam, 0.9);
-
-					//Credito
-					creditoAerolineas = calculoPrecio(precioAerolineas, 1.25);
-					creditoLatam = calculoPrecio(precioLatam, 1.25);
-
-					//Bitcoins
-					btcAerolineas = calculoPrecio(precioAerolineas, (precioAerolineas / BTC) / precioAerolineas);
-					btcLatam = calculoPrecio(precioLatam, (precioAerolineas / BTC) / precioAerolineas);
-
-					//Precio tramo
-					tramoAerolineas = calculoPrecio(precioAerolineas, (precioAerolineas / km) / precioAerolineas);
-					tramoLatam = calculoPrecio(precioLatam, (precioLatam / km) / precioLatam);
-
-					//Diferencia
-					diferencia = calculoDiferencia(precioAerolineas, precioLatam);
-
-					printf("\nCalculos realizados!");
-					flagCase3 = 1;
-				} else {
-					mensajeError();
-				}
-				break;
-			case 4:
-				if (flagCase3) {
-					printf("\nKMs ingresados %.2f km", km);
-					saltoDeLinea();
-					informe(LATAM, precioLatam, debitoLatam, creditoLatam, btcLatam, tramoLatam);
-					saltoDeLinea();
-					informe(AEROLINEAS, precioAerolineas, debitoAerolineas, creditoAerolineas, btcAerolineas, tramoAerolineas);
-					saltoDeLinea();
-					printf("\nLa diferencia de precio es: $%.2f", diferencia);
-				} else {
-					mensajeError();
-				}
-				break;
-			case 5:
-				km = KM;
-				precioAerolineas = PRECIO_A;
-				precioLatam = PRECIO_L;
-
+		case 1:
+			km = ingresarDato("\nIngrese cantidad de KM: ");
+			printf("\nKilometros ingresados %.2f", km);
+			flagCase1 = 1;
+			break;
+		case 2:
+			if (flagCase1) {
+				precioAerolineas = ingresarDato(
+						"\nIngrese el precio para Aerolineas: $");
+				precioLatam = ingresarDato("\nIngrese el precio para Latam: $");
+				printf("\nValor de %s %.2f", AEROLINEAS, precioAerolineas);
+				__fpurge(stdin);
+				printf("\nValor de %s %.2f", LATAM, precioLatam);
+				__fpurge(stdin);
+				flagCase2 = 1;
+			} else {
+				mensajeError();
+			}
+			break;
+		case 3:
+			if (flagCase2) {
 				printf("\nCalculando precios...");
 
 				//Debito
@@ -185,36 +172,98 @@ int main(void) {
 				creditoLatam = calculoPrecio(precioLatam, 1.25);
 
 				//Bitcoins
-				btcAerolineas = calculoPrecio(precioAerolineas, (precioAerolineas / BTC) / precioAerolineas);
-				btcLatam = calculoPrecio(precioLatam, (precioAerolineas / BTC) / precioAerolineas);
+				btcAerolineas = calculoPrecio(precioAerolineas,
+						(precioAerolineas / BTC) / precioAerolineas);
+				btcLatam = calculoPrecio(precioLatam,
+						(precioAerolineas / BTC) / precioAerolineas);
 
 				//Precio tramo
-				tramoAerolineas = calculoPrecio(precioAerolineas, (precioAerolineas / km) / precioAerolineas);
-				tramoLatam = calculoPrecio(precioLatam, (precioLatam / km) / precioLatam);
+				tramoAerolineas = calculoPrecio(precioAerolineas,
+						(precioAerolineas / km) / precioAerolineas);
+				tramoLatam = calculoPrecio(precioLatam,
+						(precioLatam / km) / precioLatam);
 
 				//Diferencia
 				diferencia = calculoDiferencia(precioAerolineas, precioLatam);
 
+				saltoDeLinea();
+				simularPausa();
+				printf("\nCalculos realizados!");
+				flagCase3 = 1;
+			} else {
+				mensajeError();
+			}
+			break;
+		case 4:
+			if (flagCase3) {
 				printf("\nKMs ingresados %.2f km", km);
 				saltoDeLinea();
-				informe(LATAM, precioLatam, debitoLatam, creditoLatam, btcLatam, tramoLatam);
+				informe(LATAM, precioLatam, debitoLatam, creditoLatam, btcLatam,
+						tramoLatam);
 				saltoDeLinea();
-				informe(AEROLINEAS, precioAerolineas, debitoAerolineas, creditoAerolineas, btcAerolineas, tramoAerolineas);
+				informe(AEROLINEAS, precioAerolineas, debitoAerolineas,
+						creditoAerolineas, btcAerolineas, tramoAerolineas);
 				saltoDeLinea();
 				printf("\nLa diferencia de precio es: $%.2f", diferencia);
+			} else {
+				mensajeError();
+			}
 
-				break;
-			case 6:
-				printf("\nCon esta opcion decidiste SALIR del programa... SALUDOS");
-				break;
-			default:
-				printf("ERROR# La opcion ingresada no es valida");
-				break;
+			saltoDeLinea();
+			simularPausa();
+			break;
+		case 5:
+			km = KM;
+			precioAerolineas = PRECIO_A;
+			precioLatam = PRECIO_L;
+
+			//Debito
+			debitoAerolineas = calculoPrecio(precioAerolineas, 0.9);
+			debitoLatam = calculoPrecio(precioLatam, 0.9);
+
+			//Credito
+			creditoAerolineas = calculoPrecio(precioAerolineas, 1.25);
+			creditoLatam = calculoPrecio(precioLatam, 1.25);
+
+			//Bitcoins
+			btcAerolineas = calculoPrecio(precioAerolineas,
+					(precioAerolineas / BTC) / precioAerolineas);
+			btcLatam = calculoPrecio(precioLatam,
+					(precioAerolineas / BTC) / precioAerolineas);
+
+			//Precio por tramo (unitario)
+			tramoAerolineas = calculoPrecio(precioAerolineas,
+					(precioAerolineas / km) / precioAerolineas);
+			tramoLatam = calculoPrecio(precioLatam,
+					(precioLatam / km) / precioLatam);
+
+			//Diferencia
+			diferencia = calculoDiferencia(precioAerolineas, precioLatam);
+
+			printf("\nKMs ingresados %.2f km", km);
+			saltoDeLinea();
+			informe(LATAM, precioLatam, debitoLatam, creditoLatam, btcLatam,
+					tramoLatam);
+			saltoDeLinea();
+			informe(AEROLINEAS, precioAerolineas, debitoAerolineas,
+					creditoAerolineas, btcAerolineas, tramoAerolineas);
+			saltoDeLinea();
+			printf("\nLa diferencia de precio es: $%.2f", diferencia);
+
+			saltoDeLinea();
+			simularPausa();
+			break;
+		case 6:
+			printf("\nCon esta opcion decidiste SALIR del programa... SALUDOS");
+			break;
+		default:
+			printf("ERROR# La opcion ingresada no es valida");
+			break;
 		}
 		decorado();
-		system("clear");
 
 	} while (option != 6);
 
+	mensajeSistema();
 	return EXIT_SUCCESS;
 }
