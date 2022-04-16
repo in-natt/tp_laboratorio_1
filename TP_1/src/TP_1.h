@@ -63,7 +63,6 @@ float calculoPrecio(float precio, float calculo);
  */
 float calculoDiferencia(float precioAero, float precioLata);
 
-
 #endif /* TP_1_H_ */
 
 
