@@ -23,7 +23,7 @@
 
 int menuPrincipal() {
 	int option;
-	printf("1. Ingresar Kilometros");
+	printf("\n1. Ingresar Kilometros");
 	printf("\n2. Ingresar Precio de Vuelos");
 	printf("\n3. Calcular todos los costos");
 	printf("\n4. Informar Resultados");
@@ -54,14 +54,16 @@ void decorado() {
 }
 
 void mensajeError() {
-	printf("ERROR# Debe cargar los datos primero");
+	printf("ERROR# ");
 }
 
 float ingresarDato(char mensaje[]) {
-	float dato;
-	printf("\n%s", mensaje);
-	__fpurge(stdin);
-	scanf("%f", &dato);
+	float dato = 0;
+	do {
+		printf("\n%s", mensaje);
+		__fpurge(stdin);
+		scanf("%f", &dato);
+	} while (dato <= 0);
 
 	return dato;
 }
